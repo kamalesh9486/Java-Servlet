@@ -1,0 +1,37 @@
+package com.demo.web;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.PrintWriter;
+
+@WebServlet("/CalculatePriceServlet")
+public class CalculatePriceServlet extends HttpServlet {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setContentType("text/html");
+        PrintWriter out = response.getWriter();
+        
+        // Retrieve customer name
+        String customerName = request.getParameter("customerName");
+
+        // Retrieve selected parts and quantities
+        int cpu = Integer.parseInt(request.getParameter("cpu"));
+        int cpuQty = Integer.parseInt(request.getParameter("cpuQty"));
+        int gpu = Integer.parseInt(request.getParameter("gpu"));
+        int gpuQty = Integer.parseInt(request.getParameter("gpuQty"));
+        int ram = Integer.parseInt(request.getParameter("ram"));
+        int ramQty = Integer.parseInt(request.getParameter("ramQty"));
+
+        // Calculate total price
+        double totalPrice = 0.0;
+        totalPrice =cpu*cpuQty+gpu*gpuQty+ram*ramQty;
+        // Display result
+        out.println("<html><body>");
+        out.println("<h2>Order Summary for " + customerName + "</h2>");
+        out.println("<p>Total Price: $" + totalPrice + "</p>");
+        out.println("</body></html>");
+    }
+}
